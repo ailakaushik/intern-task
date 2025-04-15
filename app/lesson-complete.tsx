@@ -25,7 +25,7 @@ const LessonCompleteScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* Confetti Animation - More contained */}
+      {/* Confetti Animation */}
       <View style={styles.confettiContainer}>
         <LottieView
           source={require('../assets/confetti.json')}
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: '40%', // Reduced height
+    height: '40%', 
     zIndex: 1,
     overflow: 'hidden',
   },
