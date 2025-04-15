@@ -7,9 +7,13 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const navigation = useNavigation<any>(); // Use "any" to avoid TS errors temporarily
+
 
   return (
     <Tabs
