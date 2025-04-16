@@ -1,16 +1,17 @@
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, Animated, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, Animated } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default function RoadmapScreen() {
   const router = useRouter();
   const [progress, setProgress] = useState(0);
-  const [scaleValue] = useState(new Animated.Value(1));  
-  
+  const [scaleValue] = useState(new Animated.Value(1));
+
   const roadmapData = {
     title: "UI/UX Design Fundamentals",
     duration: "3 months",
@@ -47,7 +48,7 @@ export default function RoadmapScreen() {
       }
     };
 
-    
+    // Triggering the initial animation when the component mounts
     Animated.spring(scaleValue, {
       toValue: 1.05,
       friction: 3,
@@ -58,7 +59,7 @@ export default function RoadmapScreen() {
   }, []);
 
   const handleLessonPress = async (index: number) => {
-    if (index > progress) return; // Ignore if lesson is locked
+    if (index > progress) return;
 
     // Triggering animation on lesson press
     Animated.sequence([
@@ -87,11 +88,7 @@ export default function RoadmapScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={{ 
-    flexGrow: 1, 
-    paddingBottom: 80    
-  }}
-  style={{ flex: 1 }} alwaysBounceVertical={true}>
+      <ScrollView contentContainerStyle={{ flexGrow:1, minHeight: Dimensions.get('window').height, paddingBottom: 80 }}>
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton} activeOpacity={0.7}>
@@ -208,173 +205,59 @@ export default function RoadmapScreen() {
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: '#F8FAFC',
-    },
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 20,
-      backgroundColor: 'white',
-      borderBottomWidth: 1,
-      borderBottomColor: '#EDF2F7',
-    },
-    backButton: {
-      padding: 8,
-      borderRadius: 12,
-      backgroundColor: '#EDF2F7',
-    },
-    resetButton: {
-      padding: 8,
-      borderRadius: 12,
-      backgroundColor: '#EBF4FF',
-    },
-    headerTitle: {
-      fontSize: 35,
-      fontWeight: '600',
-      color: '#2D3748',
-    },
-    courseHeader: {
-      padding: 24,
-      backgroundColor: 'white',
-      borderBottomWidth: 1,
-      borderBottomColor: '#EDF2F7',
-    },
-    courseTitle: {
-      fontSize: 24,
-      fontWeight: '700',
-      color: '#2D3748',
-      marginBottom: 16,
-    },
-    progressContainer: {
-      marginBottom: 20,
-    },
-    progressBar: {
-      height: 8,
-      width: '100%',
-      backgroundColor: '#E2E8F0',
-      borderRadius: 4,
-      overflow: 'hidden',
-      marginBottom: 8,
-    },
-    progressFill: {
-      height: '100%',
-      backgroundColor: '#4C51BF',
-      borderRadius: 4,
-    },
-    progressText: {
-      fontSize: 14,
-      color: '#718096',
-    },
-    metaContainer: {
-      flexDirection: 'row',
-      marginTop: 8,
-    },
-    metaItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginRight: 24,
-    },
-    metaText: {
-      fontSize: 14,
-      color: '#718096',
-      marginLeft: 6,
-    },
-    chaptersContainer: {
-      flex: 1,
-      padding: 16,
-      backgroundColor: '#F8FAFC',
-    },
-    chapterItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      padding: 16,
-      marginBottom: 12,
-      borderRadius: 16,
-      backgroundColor: 'white',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.05,
-      shadowRadius: 3,
-      elevation: 1,
-    },
-    currentChapter: {
-      borderWidth: 1,
-      borderColor: '#4C51BF',
-      backgroundColor: '#F0F5FF',
-    },
-    lockedChapter: {
-      opacity: 0.7,
-    },
-    chapterIcon: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      backgroundColor: '#EDF2F7',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginRight: 16,
-    },
-    completedIcon: {
-      backgroundColor: '#38A169',
-    },
-    currentIcon: {
-      backgroundColor: '#EBF4FF',
-    },
-    lockedIcon: {
-      backgroundColor: '#EDF2F7',
-    },
-    chapterNumber: {
-      fontSize: 16,
-      fontWeight: '600',
-      color: '#2D3748',
-    },
-    chapterContent: {
-      flex: 1,
-    },
-    chapterTitle: {
-      fontSize: 16,
-      fontWeight: '600',
-    },
-    chapterStatus: {
-      fontSize: 14,
-      color: '#A0AEC0',
-    },
-    footer: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: 70,
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      backgroundColor: '#FFFFFF',
-      borderTopWidth: 1,
-      borderTopColor: '#EDF2F7',
-    },
-    footerButton: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    footerButtonActive: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderBottomWidth: 4,
-      borderBottomColor: '#4C51BF',
-    },
-    footerText: {
-      fontSize: 12,
-      color: '#718096',
-    },
-    footerTextActive: {
-      fontSize: 12,
-      color: '#4C51BF',
-    },
-    activeButtonIcon: {
-      marginBottom: 4,
-    },
-  });
-  
+  safeArea: { flex: 1, backgroundColor: '#F8FAFC' },
+  header: {
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+    padding: 20, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#EDF2F7',
+  },
+  backButton: { padding: 8, borderRadius: 12, backgroundColor: '#EDF2F7' },
+  resetButton: { padding: 8, borderRadius: 12, backgroundColor: '#EBF4FF' },
+  headerTitle: { fontSize: 35, fontWeight: '600', color: '#2D3748' },
+  courseHeader: {
+    padding: 24, backgroundColor: 'white',
+    borderBottomWidth: 1, borderBottomColor: '#EDF2F7',
+  },
+  courseTitle: { fontSize: 24, fontWeight: '700', color: '#2D3748', marginBottom: 16 },
+  progressContainer: { marginBottom: 20 },
+  progressBar: {
+    height: 8, width: '100%', backgroundColor: '#E2E8F0',
+    borderRadius: 4, overflow: 'hidden', marginBottom: 8,
+  },
+  progressFill: { height: '100%', backgroundColor: '#4C51BF', borderRadius: 4 },
+  progressText: { fontSize: 14, color: '#718096' },
+  metaContainer: { flexDirection: 'row', marginTop: 8 },
+  metaItem: { flexDirection: 'row', alignItems: 'center', marginRight: 24 },
+  metaText: { fontSize: 14, color: '#718096', marginLeft: 6 },
+  chaptersContainer: { flex: 1, padding: 16, backgroundColor: '#F8FAFC' },
+  chapterItem: {
+    flexDirection: 'row', alignItems: 'center', padding: 16,
+    marginBottom: 12, borderRadius: 16, backgroundColor: 'white',
+    shadowColor: '#000', shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05, shadowRadius: 3, elevation: 1,
+  },
+  currentChapter: { borderWidth: 1, borderColor: '#4C51BF', backgroundColor: '#F0F5FF' },
+  lockedChapter: { opacity: 0.7 },
+  chapterIcon: {
+    width: 40, height: 40, borderRadius: 20, backgroundColor: '#EDF2F7',
+    justifyContent: 'center', alignItems: 'center', marginRight: 16,
+  },
+  completedIcon: { backgroundColor: '#38A169' },
+  currentIcon: { backgroundColor: '#EBF4FF' },
+  lockedIcon: { backgroundColor: '#EDF2F7' },
+  chapterNumber: { fontSize: 16, fontWeight: '600', color: '#718096' },
+  chapterContent: { flex: 1 },
+  chapterTitle: { fontSize: 16 },
+  chapterStatus: { fontSize: 12, color: '#718096', marginTop: 2 },
+  footer: {
+    flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center',
+    paddingVertical: 12, backgroundColor: 'white', borderTopWidth: 1, borderTopColor: '#E2E8F0',
+  },
+  footerButton: { alignItems: 'center' },
+  footerText: { fontSize: 12, color: '#718096', marginTop: 4 },
+  footerButtonActive: { alignItems: 'center' },
+  footerTextActive: { fontSize: 12, color: '#4C51BF', marginTop: 4, fontWeight: '600' },
+  activeButtonIcon: {
+    backgroundColor: '#EBF4FF', borderRadius: 24,
+    padding: 8, alignItems: 'center', justifyContent: 'center',
+  },
+});
