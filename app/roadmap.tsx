@@ -3,6 +3,8 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native';
+
 
 const { width } = Dimensions.get('window');
 
@@ -80,6 +82,7 @@ export default function RoadmapScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+    <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>  
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity 
@@ -98,7 +101,8 @@ export default function RoadmapScreen() {
           <Ionicons name="refresh" size={20} color="#4C51BF" />
         </TouchableOpacity>
       </View>
-
+      
+      
       {/* Course Header */}
       <View style={styles.courseHeader}>
         <Text style={styles.courseTitle}>{roadmapData.title}</Text>
@@ -193,6 +197,7 @@ export default function RoadmapScreen() {
           );
         })}
       </View>
+      </ScrollView>
 
       {/* Footer Navigation */}
       <View style={styles.footer}>
